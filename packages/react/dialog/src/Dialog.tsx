@@ -36,6 +36,7 @@ type DialogContextValue = {
   onOpenChange(open: boolean): void;
   onOpenToggle(): void;
   modal: boolean;
+  nonce?: string;
 };
 
 const [DialogProvider, useDialogContext] = createDialogContext<DialogContextValue>(DIALOG_NAME);
@@ -46,6 +47,7 @@ interface DialogProps {
   defaultOpen?: boolean;
   onOpenChange?(open: boolean): void;
   modal?: boolean;
+  nonce?: string;
 }
 
 const Dialog: React.FC<DialogProps> = (props: ScopedProps<DialogProps>) => {
@@ -56,6 +58,7 @@ const Dialog: React.FC<DialogProps> = (props: ScopedProps<DialogProps>) => {
     defaultOpen,
     onOpenChange,
     modal = true,
+    nonce,
   } = props;
   const triggerRef = React.useRef<HTMLButtonElement>(null);
   const contentRef = React.useRef<DialogContentElement>(null);
@@ -77,6 +80,7 @@ const Dialog: React.FC<DialogProps> = (props: ScopedProps<DialogProps>) => {
       onOpenChange={setOpen}
       onOpenToggle={React.useCallback(() => setOpen((prevOpen) => !prevOpen), [setOpen])}
       modal={modal}
+      nonce={nonce}
     >
       {children}
     </DialogProvider>
